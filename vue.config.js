@@ -22,6 +22,12 @@ module.exports = {
     module: {
       rules: [
         {
+          test: /\.ts$/,
+          exclude: /node_modules/,
+          enforce: 'pre',
+          loader: 'tslint-loader'
+        },
+        {
           test: /\.tsx?$/,
           loader: 'ts-loader',
           exclude: /node_modules/,
@@ -42,10 +48,10 @@ module.exports = {
       postcss: {
         plugins: [
           // eslint-disable-next-line @typescript-eslint/no-var-requires
-          require('postcss-px2rem')({
-            // 以设计稿750为例， 750 / 10 = 75
-            remUnit: 144
-          })
+          // require('postcss-px2rem')({
+          //   // 以设计稿750为例， 750 / 10 = 75
+          //   remUnit: 1440
+          // })
         ]
       } // 这里的选项会传递给 postcss-loader
     }, // css预设器配置项 详见https://cli.vuejs.org/zh/config/#css-loaderoptions
@@ -63,17 +69,18 @@ module.exports = {
     overlay: {
       warnings: true,
       errors: true
-    }, // 错误、警告在页面弹出
-    proxy: {
-      '/api': {
-        target: '',
-        changeOrigin: true, // 允许websockets跨域
-        // ws: true,
-        pathRewrite: {
-          '^/api': ''
-        }
-      }
-    } // 代理转发配置，用于调试环境
+    }
+    // }, // 错误、警告在页面弹出
+    // proxy: {
+    //   '/api': {
+    //     target: '',
+    //     changeOrigin: true, // 允许websockets跨域
+    //     // ws: true,
+    //     pathRewrite: {
+    //       '^/api': ''
+    //     }
+    //   }
+    // } // 代理转发配置，用于调试环境
   },
   // 第三方插件配置
   pluginOptions: {}
