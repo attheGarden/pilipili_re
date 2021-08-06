@@ -41,18 +41,14 @@
         <transition name="normal">
           <el-input
             placeholder="请输入内容"
+            prefix-icon="el-icon-search"
             v-model="searchInput"
             v-show="searchFlag">
-            <template #prefix>
-              <i class="el-input__icon el-icon-search"></i>
-            </template>
           </el-input>
         </transition>
       </div>
-      <div class="search-icon" v-show="searchFlag">
-          <el-svg-icon>
-            <search />
-          </el-svg-icon>
+      <div class="search-icon" v-show="!searchFlag">
+          <i class="iconfont" style="color:white; font-weight: 700;">&#xe629;</i>
       </div>
     </div>
   </div>
@@ -78,6 +74,9 @@ export default {
     ]
     const screenWidth = ref(document.body.clientWidth)
     const searchFlag = ref(true)
+    if (screenWidth.value <= 1300) {
+      searchFlag.value = false
+    }
     const searchInputWidth = computed(() => {
       return document.body.clientWidth * 0.35513
     })
@@ -87,12 +86,8 @@ export default {
       })
     })
     watch(screenWidth, () => {
-      console.log(screenWidth)
-      if (screenWidth.value > 1300) {
-        searchFlag.value = true
-      } else {
-        searchFlag.value = false
-      }
+      console.log(screenWidth.value)
+      searchFlag.value = screenWidth.value > 1300
     })
     const showLoginBox = () => {
       context.emit('showLoginBox')
@@ -215,16 +210,15 @@ export default {
           border-radius 2px
 
     .search-box
-      max-width 500px
+      max-width 400px
       height 36px
-      margin 0 10px
+      padding-bottom 3px
       float right
       &.normal-enter-active
         animation bounce-in 1s
       &.normal-leave-active
         animation bounce-in 1s
     .search-icon
-      width 16px
       float right
 @keyframes bounce-in
   0%

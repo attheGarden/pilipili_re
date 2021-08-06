@@ -63,8 +63,8 @@
           </div>
           <div class="img_panel">
             <div class="img">
-              <img src="https://static.hdslb.com/images/danmu.png" class="img_style">
-              <img src="https://static.hdslb.com/images/danmu.png" class="img_style">
+              <img src="https://static.hdslb.com/images/danmu.png" class="img_style" alt="">
+              <img src="https://static.hdslb.com/images/danmu.png" class="img_style" alt="">
             </div>
           </div>
           <div class="btn_box">
@@ -86,7 +86,8 @@
 <script lang="ts">
 // import axios from 'axios'
 import { ref } from 'vue'
-import Mheader from 'components/m-header/m-header.vue'
+import Mheader from '../components/m-header/m-header.vue'
+import 'src/common/sakura'
 
 export default {
   setup () {
@@ -132,7 +133,6 @@ export default {
 
         if (el.getElementsByTagName('img')[0].getAttribute('data-is-opacity')) {
           const o_arr = o_imgs_opacitys[i].split(':')
-          const o_value = Number(o_arr[1])
           const href_w = window.screen.width / 2
 
           const o_dis = Number(el.getElementsByTagName('img')[0].getAttribute('data-is-opacity')) ? intX - x : x - intX
@@ -363,14 +363,14 @@ function getSliderImg () {
         padding 8px 23px
         color rgb(96, 98, 102)
     .triangle
-      display: block;
-      height: 0px;
-      width: 0px;
-      border: 10px solid transparent;
-      border-bottom-color: #ffffff;
-      position: absolute;
-      top: -20px;
-      left: calc(50% - 10px);
+      display: block
+      height: 0
+      width: 0
+      border: 10px solid transparent
+      border-bottom-color: #ffffff
+      position: absolute
+      top: -20px
+      left: calc(50% - 10px)
   @keyframes slideshow1
     0%
       left 0
