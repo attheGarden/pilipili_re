@@ -48,10 +48,11 @@ module.exports = {
       postcss: {
         plugins: [
           // eslint-disable-next-line @typescript-eslint/no-var-requires
-          // require('postcss-px2rem')({
-          //   // 以设计稿750为例， 750 / 10 = 75
-          //   remUnit: 1440
-          // })
+          require('postcss-px2rem')({
+            // 以设计稿750为例， 750 / 10 = 75
+            // 180/16 = 11.25
+            remUnit: 16
+          })
         ]
       } // 这里的选项会传递给 postcss-loader
     }, // css预设器配置项 详见https://cli.vuejs.org/zh/config/#css-loaderoptions

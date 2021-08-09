@@ -80,6 +80,9 @@
         </div>
       </div>
     </transition>
+    <div class="home-menu-wrap">
+      <Mmenu></Mmenu>
+    </div>
   </div>
 </template>
 
@@ -87,6 +90,7 @@
 // import axios from 'axios'
 import { ref } from 'vue'
 import Mheader from '../components/m-header/m-header.vue'
+import Mmenu from '../components/menu/m-menu.vue'
 import 'src/common/sakura'
 
 export default {
@@ -97,7 +101,8 @@ export default {
     }
   },
   components: {
-    Mheader
+    Mheader,
+    Mmenu
   },
   methods: {
   },
@@ -371,6 +376,10 @@ function getSliderImg () {
       position: absolute
       top: -20px
       left: calc(50% - 10px)
+  .home-menu-wrap
+    width 1160px
+    height 109px
+    margin 0 auto
   @keyframes slideshow1
     0%
       left 0
