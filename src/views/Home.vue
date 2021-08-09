@@ -83,26 +83,45 @@
     <div class="home-menu-wrap">
       <Mmenu></Mmenu>
     </div>
+    <div class="home-promote-wrap">
+      <div class="top-wrap">
+        <div class="slider">
+          <el-carousel :interval="2000" height="242px">
+            <el-carousel-item v-for="item in sliderImg" :key="item">
+              <img :src="item.img" alt="error" width="550" height="242">
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+        <div class="video-wrap">
+          <div class="video-box" v-for="(item,index) in videoList" :key="index">
+            <VideoBox :dataOfVideo="item"></VideoBox>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-// import axios from 'axios'
+import axios from 'axios'
 import { ref } from 'vue'
 import Mheader from '../components/m-header/m-header.vue'
 import Mmenu from '../components/menu/m-menu.vue'
+import VideoBox from '../common/videoBox/videoBox.vue'
 import 'src/common/sakura'
 
 export default {
   setup () {
     return {
       ...getSliderImg(),
-      ...loginBoxFun()
+      ...loginBoxFun(),
+      ...getPromoteVideo()
     }
   },
   components: {
     Mheader,
-    Mmenu
+    Mmenu,
+    VideoBox
   },
   methods: {
   },
@@ -173,11 +192,33 @@ function loginBoxFun () {
 
 function getSliderImg () {
   const sliderImg = ref([])
-  sliderImg.value = []
+  sliderImg.value = [
+    {
+      img: 'https://i0.hdslb.com/bfs/archive/b756748dcb605391c55db5b8a24073e20b61359f.jpg@880w_440h.jpg'
+    },
+    {
+      img: 'https://i0.hdslb.com/bfs/archive/e02dbd6344cfcbbb4e327c5c1cf14d6c84684444.jpg@880w_440h.jpg'
+    },
+    {
+      img: 'https://i0.hdslb.com/bfs/feed-admin/6b52273be6d566d85ba14b6f659905a1ceb0dbc4.jpg@880w_388h_1c_95q'
+    },
+    {
+      img: 'https://i0.hdslb.com/bfs/feed-admin/368465008c7fed98726f1970d65f50000ba8b033.png@880w_388h_1c_95q'
+    }
+  ]
   // axios.get('api/getSliderImg').then(res => {
   //   sliderImg.value = res.data
   // })
   return { sliderImg }
+}
+
+function getPromoteVideo () {
+  const videoList = ref([])
+  axios.get('/api/x/web-interface/archive/related?aid=12').then(res => {
+    // console.log(res.data.data)
+    videoList.value = res.data.data.slice(6, 12)
+  })
+  return { videoList }
 }
 </script>
 
@@ -377,9 +418,35 @@ function getSliderImg () {
       top: -20px
       left: calc(50% - 10px)
   .home-menu-wrap
-    width 1160px
+    width 1198px
     height 109px
     margin 0 auto
+  .home-promote-wrap
+    width 1198px
+    height 526px
+    margin 0 auto
+    .top-wrap
+      height 242px
+      width 1198px
+      margin-bottom 40px
+      display flex
+      .slider
+        width 550px
+        height 242px
+        margin-right 10px
+        overflow: hidden
+      .video-wrap
+        width 638px
+        display flex
+        right 0
+        flex-wrap wrap
+        flex-direction row
+        justify-content space-between
+        overflow hidden
+        .video-box
+          width 203px
+          height 116px
+          margin-bottom 10px
   @keyframes slideshow1
     0%
       left 0

@@ -70,6 +70,15 @@ module.exports = {
     overlay: {
       warnings: true,
       errors: true
+    },
+    proxy: {
+      '/api': {
+        target: 'http://api.bilibili.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
     }
     // }, // 错误、警告在页面弹出
     // proxy: {
