@@ -1,16 +1,20 @@
 <template>
   <div class="video-box" ref="videoBox" @mouseenter="showCover" @mouseleave="hideCover">
     <div class="img-wrap">
-      <img :src="dataOfVideo.pic" width="203">
+      <img :src="dataOfVideo.pic" class="videoImg">
     </div>
-    <div class="cover-wrap" ref="coverWrap">
+    <div class="cover-wrap" ref="coverWrap" v-show="isCover">
       <div class="cover-content" ref="coverContent">
         <a class="cover-title" :title="dataOfVideo.title" ref="coverTitle">{{dataOfVideo.title}}</a>
         <p class="cover-up" v-show="coverFlag">
-          <a style="border-radius: 5px;border: 1px solid #e0e0e0;color: white;font-size: 10px;height: 10px">up</a>
+          <a style="border-radius: 5px;border: 1px solid #e0e0e0;color: white;font-size: 10px;height: 8px;padding: 0 3px">
+            up</a>
           {{dataOfVideo.owner.name}}
         </p>
         <p class="cover-play" v-show="coverFlag">{{playNum}}播放</p>
+        <a class="cover-play-icon" v-show="coverFlag">
+          <i class="iconfont">&#xe61a;</i>
+        </a>
       </div>
       <div class="cover" ref="cover"></div>
     </div>
@@ -20,8 +24,8 @@
   </div>
 </template>
 
-<script>
-import { computed, ref } from 'vue'
+<script lang="ts">
+import { ref } from 'vue'
 
 export default {
   name: 'videoBox',
@@ -80,10 +84,12 @@ export default {
       this.$refs.coverTitle.style.webkitLineClamp = '1'
       this.$refs.coverTitle.style.height = '18px'
       this.$refs.coverWrap.style.backgroundImage = 'linear-gradient(\n' +
-        '        rgba(0,0,0,0.05) 0%,\n' +
-        '        rgba(0,0,0,0.6) 20%,\n' +
-        '        rgba(0,0,0,0.8) 100%\n' +
-        '      )'
+        '      rgba(0,0,0,0) 0%,\n' +
+        '      rgba(0,0,0,0.4) 30%,\n' +
+        '      rgba(0,0,0,0.5) 45%,\n' +
+        '      rgba(0,0,0,0.9) 85%,\n' +
+        '      rgba(0,0,0,0.66)\n' +
+        '    )'
       this.$refs.cover.style.backgroundColor = 'rgba(0, 0, 0, 0.0)'
       this.coverFlag = false
     }
@@ -94,26 +100,26 @@ export default {
 
 <style scoped lang="stylus">
 .video-box
-  min-height 10px
   height 100%
   overflow hidden
   .img-wrap
     width 100%
     height 100%
-    img
-      display: block
-      max-width: 100%
+    .videoImg
+      width 206px
       max-height 100%
   .cover-wrap
     width 186px
     height 82px
-    padding 26px 10px 10px 10px
+    padding 24px 10px 10px 10px
     position relative
     transform translateY(-54px)
     background-image linear-gradient(
-      rgba(0,0,0,0.05) 0%,
-      rgba(0,0,0,0.6) 20%,
-      rgba(0,0,0,0.8) 100%
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,0.4) 30%,
+      rgba(0,0,0,0.5) 45%,
+      rgba(0,0,0,0.9) 85%,
+      rgba(0,0,0,0.66)
     )
     .cover-content
       width 186px
@@ -150,15 +156,16 @@ export default {
       .cover-play-icon
         width 28px
         height 28px
+        color white
         position relative
-        top 0px
-        background-color white
+        top -34px
+        right -150px
     .cover
-      width 206px
+      width 203px
       height 116px
       background-color rgba(0, 0, 0, 0.0)
       position relative
-      top -170px
+      top -168px
       left -10px
       z-index -2
 @keyframes coverAnimation

@@ -117,6 +117,7 @@ export default {
 .m-header
   position absolute
   width 100%
+  min-width 1200px
   height 56px
   float left
   z-index 3
