@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="header">
-      <Mheader @showLoginBox="showLoginBox" @hideLoginBox="hideLoginBox"></Mheader>
+      <m-header @showLoginBox="showLoginBox" @hideLoginBox="hideLoginBox"></m-header>
       <div class="banner" id="banner">
         <div class="banner-img-layer">
           <img src="../static/img/i1.png" data-move-multiple="16.395" class="banner-img-layer-img1" ref="i1" alt="">
@@ -81,22 +81,47 @@
       </div>
     </transition>
     <div class="home-menu-wrap">
-      <Mmenu></Mmenu>
+      <m-menu></m-menu>
     </div>
     <div class="home-promote-wrap">
       <div class="top-wrap">
         <div class="slider">
-          <el-carousel :interval="2000" height="242px">
+          <el-carousel :interval="4000" height="242px">
             <el-carousel-item v-for="item in sliderImg" :key="item">
               <img :src="item.img" alt="error" width="550" height="242">
             </el-carousel-item>
           </el-carousel>
         </div>
         <div class="video-wrap">
-          <div class="video-box" v-for="(item,index) in videoList" :key="index">
-            <VideoBox :dataOfVideo="item"></VideoBox>
+          <div class="video-box" v-for="(item,index) in promoteVideoList" :key="index">
+            <promote-video-box :dataOfVideo="item" :isCover="true"></promote-video-box>
           </div>
         </div>
+      </div>
+      <div class="bottom-wrap">
+        <div class="extension-box">
+          <header class="storey-title-wrap">
+            <span class="storey-item-title">
+              <i class="iconfont" style="color:#f39800;font-size: 35px;">&#xe64a;</i>
+              推广
+            </span>
+            <span class="storey-item-msg">
+              <i class="iconfont" style="color:#f0361b;font-size: 18px;margin-right: 4px">&#xe664;</i>
+              <span class="msg">来B站小剧场，撒狗粮还能拿奖！</span>
+            </span>
+            <span class="storey-item-msg">
+              <i class="iconfont" style="color:#f0361b;font-size: 18px;margin-right: 4px">&#xe664;</i>
+              <span class="msg">网络安全感满意度调查</span>
+            </span>
+          </header>
+          <div class="ext-box">
+            <video-box :video-data="videoList" v-if="videoList"></video-box>
+            <ad-box></ad-box>
+            <ad-box></ad-box>
+            <ad-box></ad-box>
+          </div>
+        </div>
+        <div class="bybp-window"></div>
       </div>
     </div>
   </div>
@@ -104,24 +129,35 @@
 
 <script lang="ts">
 import axios from 'axios'
-import { ref } from 'vue'
-import Mheader from '../components/m-header/m-header.vue'
-import Mmenu from '../components/menu/m-menu.vue'
-import VideoBox from '../common/videoBox/videoBox.vue'
+import { ref, toRef } from 'vue'
+import mHeader from '@/components/m-header/m-header.vue'
+import mMenu from '@/components/menu/m-menu.vue'
+import promoteVideoBox from '@/common/promoteVideoBox/promoteVideoBox.vue'
+import adBox from '@/common/adBox/adBox.vue'
+import videoBox from '@/common/videoBox/videoBox.vue'
 import 'src/common/sakura'
 
 export default {
   setup () {
+    const videoList = ref({})
+    axios.get('/api/x/web-interface/view?aid=761930368').then(res => {
+      // console.log(res.data)
+      videoList.value = res.data.data
+      console.log(videoList)
+    })
     return {
       ...getSliderImg(),
       ...loginBoxFun(),
-      ...getPromoteVideo()
+      ...getPromoteVideo(),
+      videoList
     }
   },
   components: {
-    Mheader,
-    Mmenu,
-    VideoBox
+    mHeader,
+    mMenu,
+    promoteVideoBox,
+    adBox,
+    videoBox
   },
   methods: {
   },
@@ -213,12 +249,12 @@ function getSliderImg () {
 }
 
 function getPromoteVideo () {
-  const videoList = ref([])
+  const promoteVideoList = ref([])
   axios.get('/api/x/web-interface/archive/related?aid=12').then(res => {
     // console.log(res.data.data)
-    videoList.value = res.data.data.slice(6, 12)
+    promoteVideoList.value = res.data.data.slice(12, 18)
   })
-  return { videoList }
+  return { promoteVideoList }
 }
 </script>
 
@@ -228,6 +264,7 @@ function getPromoteVideo () {
   width 100%
   .header
     height 180px
+    min-width 1200px
     display block
     .banner
       margin 0 auto
@@ -447,6 +484,44 @@ function getPromoteVideo () {
           width 203px
           height 116px
           margin-bottom 10px
+    .bottom-wrap
+      width 1198px
+      height 244px
+      margin-bottom 40px
+      display flex
+      flex-direction row
+      justify-content space-between
+      .extension-box
+        width 854px
+        height 244px
+        overflow hidden
+        display flex
+        flex-direction column
+        .storey-title-wrap
+          display flex
+          height 36px
+          margin-bottom 16px
+          line-height 36px
+          .storey-item-title
+            display flex
+            height 36px
+            line-height 36px
+            font-size 20px
+          .storey-item-msg
+            display flex
+            line-height 36px
+            font-size 12px
+            margin-left 20px
+            cursor pointer
+            .msg:hover
+              color #66b1ff
+        .ext-box
+          display flex
+          flex-direction row
+          justify-content space-between
+      .bybp-window
+        width 320px
+        height 244px
   @keyframes slideshow1
     0%
       left 0

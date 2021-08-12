@@ -2,7 +2,7 @@
   <div class="adBox">
     <div class="img-wrap">
       <img src="https://i0.hdslb.com/bfs/sycp/creative_img/202106/ed7a38f96b6fc524ca1885b5f666c01a.jpg@412w_232h_1c"
-           class="ad-img">
+           class="ad-img" alt="error">
     </div>
     <div class="title-wrap">
       <span class="title-wrap-left">广告</span>
@@ -41,7 +41,7 @@ export default {
       border 1px solid #b2b2b2
       margin-right 8px
       font-size 12px
-      border-radius 2px
+      border-radius 4px
       text-align center
     .title-wrap-right
       color rgb(33, 33, 33)

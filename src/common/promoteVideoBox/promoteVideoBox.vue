@@ -1,7 +1,7 @@
 <template>
   <div class="video-box" ref="videoBox" @mouseenter="showCover" @mouseleave="hideCover">
     <div class="img-wrap">
-      <img :src="dataOfVideo.pic" class="videoImg">
+      <img :src="dataOfVideo.pic" class="videoImg" alt="error">
     </div>
     <div class="cover-wrap" ref="coverWrap" v-show="isCover">
       <div class="cover-content" ref="coverContent">
