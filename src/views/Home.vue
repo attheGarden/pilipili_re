@@ -19,7 +19,8 @@
           <img src="../static/img/i5.png" data-move-multiple="14.573" class="banner-img-layer-img5" ref="i5" alt="">
         </div>
         <div class="banner-img-layer">
-          <img src="../static/img/i6.png" data-move-multiple="29.277" class="banner-img-layer-img6" data-is-opacity="0" ref="i6" alt="error">
+          <img src="../static/img/i6.png" data-move-multiple="29.277" class="banner-img-layer-img6" data-is-opacity="0"
+               ref="i6" alt="error">
         </div>
         <div class="banner-img-layer">
           <img src="../static/img/i7.png" data-move-multiple="2.342" class="banner-img-layer-img7" ref="i7" alt="">
@@ -28,29 +29,37 @@
           <img src="../static/img/i8.png" data-move-multiple="1.952" class="banner-img-layer-img8" ref="i8" alt="">
         </div>
         <div class="banner-img-layer">
-          <img src="../static/img/i9.png" data-move-multiple="4.098" class="banner-img-layer-img9" data-is-opacity="1" ref="i9" alt="error">
+          <img src="../static/img/i9.png" data-move-multiple="4.098" class="banner-img-layer-img9" data-is-opacity="1"
+               ref="i9" alt="error">
         </div>
         <div class="banner-img-layer">
-          <img src="../static/img/i10.png" data-move-multiple="2.826" class="banner-img-layer-img10" data-is-opacity="1" ref="i10" alt="error">
+          <img src="../static/img/i10.png" data-move-multiple="2.826" class="banner-img-layer-img10" data-is-opacity="1"
+               ref="i10" alt="error">
         </div>
         <div class="banner-img-layer">
-          <img src="../static/img/i11.png" data-move-multiple="1.457" class="banner-img-layer-img11" ref="i11" alt="error">
+          <img src="../static/img/i11.png" data-move-multiple="1.457" class="banner-img-layer-img11" ref="i11"
+               alt="error">
         </div>
         <div class="banner-img-layer">
-          <img src="../static/img/i12.png" data-move-multiple="1.092" class="banner-img-layer-img12" ref="i14" alt="error">
+          <img src="../static/img/i12.png" data-move-multiple="1.092" class="banner-img-layer-img12" ref="i14"
+               alt="error">
         </div>
         <div class="banner-img-layer">
-          <img src="../static/img/i13.png" data-move-multiple="1.104" class="banner-img-layer-img13" ref="i13" alt="error">
+          <img src="../static/img/i13.png" data-move-multiple="1.104" class="banner-img-layer-img13" ref="i13"
+               alt="error">
         </div>
         <div class="banner-img-layer">
-          <img src="../static/img/i14.png" data-move-multiple="0.781" class="banner-img-layer-img14" ref="i14" alt="error">
+          <img src="../static/img/i14.png" data-move-multiple="0.781" class="banner-img-layer-img14" ref="i14"
+               alt="error">
         </div>
         <div class="banner-img-layer">
-          <img src="../static/img/i15.png" data-move-multiple="0.546" class="banner-img-layer-img15" id="i15" alt="error">
+          <img src="../static/img/i15.png" data-move-multiple="0.546" class="banner-img-layer-img15" id="i15"
+               alt="error">
         </div>
         <canvas id="canvas" width="1920" height="180" class="snow"></canvas>
         <div class="banner-logo-wrap">
-          <img src="https://i0.hdslb.com/bfs/feed-admin/10641bbc5189591221c00958f3458f33798c7caa.png" class="banner-logo" alt="error">
+          <img src="https://i0.hdslb.com/bfs/feed-admin/10641bbc5189591221c00958f3458f33798c7caa.png"
+               class="banner-logo" alt="error">
         </div>
       </div>
     </div>
@@ -159,8 +168,7 @@ export default {
     adBox,
     videoBox
   },
-  methods: {
-  },
+  methods: {},
   mounted () {
     const temp_imgs = document.querySelectorAll('.banner-img-layer')
     const imgs = [...temp_imgs]
@@ -223,7 +231,11 @@ function loginBoxFun () {
   const hideLoginBox = () => {
     login_popover_flag.value = false
   }
-  return { login_popover_flag, showLoginBox, hideLoginBox }
+  return {
+    login_popover_flag,
+    showLoginBox,
+    hideLoginBox
+  }
 }
 
 function getSliderImg () {
@@ -262,10 +274,12 @@ function getPromoteVideo () {
 .home
   display block
   width 100%
+
   .header
     height 180px
     min-width 1200px
     display block
+
     .banner
       margin 0 auto
       background-color #f9f9f9
@@ -273,6 +287,7 @@ function getPromoteVideo () {
       z-index 0
       height 180px
       overflow hidden
+
       .banner-img-layer
         position absolute
         top 0
@@ -283,87 +298,104 @@ function getPromoteVideo () {
         align-items center
         justify-content center
         float left
+
         .banner-img-layer-img1
           width 5612px
           height 209px
           transform scale(1) translate(0px, -17.4194px) rotate(0deg)
           opacity 1
+
         .banner-img-layer-img2
           width 5612px
           height 209px
           transform scale(1) translate(1277.42px, 0px) rotate(0deg)
           opacity 1
+
         .banner-img-layer-img3
           width 1841px
           height 188px
           transform scale(1) translate(783.871px, 0px) rotate(0deg)
           opacity 1
+
         .banner-img-layer-img4
           width 1671px
           height 204px
           transform scale(1) translate(-739.742px, 0px) rotate(0deg)
           opacity 1
+
         .banner-img-layer-img5
           width 290px
           height 72px
           transform scale(1) translate(705.484px, 52.2581px) rotate(0deg)
           opacity 1
+
         .banner-img-layer-img6
           width 238px
           height 98px
           transform scale(1) translate(292.645px, 42.271px) rotate(0deg)
           opacity 0
+
         .banner-img-layer-img7
           width 1428px
           height 146px
           transform scale(1) translate(130.065px, 16.2581px) rotate(0deg)
           opacity 1
+
         .banner-img-layer-img8
           width 1428px
           height 94px
           transform scale(1) translate(-406.452px, 56.9032px) rotate(0deg)
           opacity 1
+
         .banner-img-layer-img9
           width 230px
           height 160px
           transform scale(1) translate(-278.71px, 18.5806px) rotate(0deg)
           opacity 0
+
         .banner-img-layer-img10
           width 67px
           height 118px
           transform scale(1) translate(-394.839px, 37.1613px) rotate(0deg)
           opacity 0
+
         .banner-img-layer-img11
           width 314px
           height 132px
           transform scale(1) translate(-104.516px, 15.6774px) rotate(0deg)
           opacity 1
+
         .banner-img-layer-img12
           width 2483px
           height 209px
           transform scale(1) translate(116.129px, 0px) rotate(0deg)
           opacity 1
+
         .banner-img-layer-img13
           width 487px
           height 170px
           transform scale(1) translate(250.839px, 15.6774px) rotate(0deg)
           opacity 1
+
         .banner-img-layer-img14
           width 515px
           height 245px
           transform scale(1) translate(2438.71px, 0px) rotate(0deg)
           filter blur(2px)
           opacity 1
+
         .banner-img-layer-img15
           width 1112px
           height 209px
           transform scale(1) translate(-1161.29px, 0px) rotate(0deg)
           filter blur(1px)
           opacity 1
+
       .snow
         z-index 100
         position absolute
         top 0
+
       .banner-logo-wrap
         width 74%
         height 180px
@@ -371,10 +403,12 @@ function getPromoteVideo () {
         position relative
         bottom 0
         z-index 40
+
         .banner-logo
           position absolute
           bottom 0
           max-height 78px
+
   .tooltip_popover1
     width 360px
     position absolute
@@ -386,26 +420,31 @@ function getPromoteVideo () {
     color rgb(96, 98, 102)
     font-size 14px
     font-weight normal
+
     &.tooltip_popover1-enter-active, &.tooltip_popover1-leave-active
       transition: all 1s
 
     &.tooltip_popover1-enter, &.tooltip_popover1-leave-to
       opacity: 0
+
     .tp1_container
       width 320px
       padding 16px 20px 12px 20px
       border-bottom 1px solid rgb(244, 244, 244)
+
       .title
         width 100%
         line-height 19px
         height 19px
         margin-bottom 15px
         color rgb(33, 33, 33)
+
       .img_panel
         height 200px
         width 100%
         overflow hidden
         background-image url("https://static.hdslb.com/images/base/danmu.png")
+
         .img
           float left
           position relative
@@ -414,13 +453,16 @@ function getPromoteVideo () {
           height 200px
           width 640px
           animation slideshow1 5s linear infinite
+
           .img_style
             float left
+
       .btn_box
         width 100%
         height 54px
         text-align center
         line-height 36px
+
         .btn_register
           width 46%
           height 36px
@@ -428,6 +470,7 @@ function getPromoteVideo () {
           border 1px solid rgb(0, 161, 214)
           border-radius 2px
           margin-top 15px
+
         .btn_login
           width 46%
           height 36px
@@ -437,14 +480,18 @@ function getPromoteVideo () {
           border 1px solid rgb(0, 161, 214)
           border-radius 2px
           margin-top 15px
+
           &:hover
             background-color #66b1ff
+
     .lang_change
       width 100%
       height 42px
+
       .lang_item
         padding 8px 23px
         color rgb(96, 98, 102)
+
     .triangle
       display: block
       height: 0
@@ -454,24 +501,29 @@ function getPromoteVideo () {
       position: absolute
       top: -20px
       left: calc(50% - 10px)
+
   .home-menu-wrap
     width 1198px
     height 109px
     margin 0 auto
+
   .home-promote-wrap
     width 1198px
     height 526px
     margin 0 auto
+
     .top-wrap
       height 242px
       width 1198px
       margin-bottom 40px
       display flex
+
       .slider
         width 550px
         height 242px
         margin-right 10px
         overflow: hidden
+
       .video-wrap
         width 638px
         display flex
@@ -480,10 +532,12 @@ function getPromoteVideo () {
         flex-direction row
         justify-content space-between
         overflow hidden
+
         .video-box
           width 203px
           height 116px
           margin-bottom 10px
+
     .bottom-wrap
       width 1198px
       height 244px
@@ -491,37 +545,45 @@ function getPromoteVideo () {
       display flex
       flex-direction row
       justify-content space-between
+
       .extension-box
         width 854px
         height 244px
         overflow hidden
         display flex
         flex-direction column
+
         .storey-title-wrap
           display flex
           height 36px
           margin-bottom 16px
           line-height 36px
+
           .storey-item-title
             display flex
             height 36px
             line-height 36px
             font-size 20px
+
           .storey-item-msg
             display flex
             line-height 36px
             font-size 12px
             margin-left 20px
             cursor pointer
+
             .msg:hover
               color #66b1ff
+
         .ext-box
           display flex
           flex-direction row
           justify-content space-between
+
       .bybp-window
         width 320px
         height 244px
+
   @keyframes slideshow1
     0%
       left 0
