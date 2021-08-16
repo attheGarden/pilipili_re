@@ -49,6 +49,7 @@ export default {
     const layerX = ref(0)
     const percentage = ref(0)
     const danmu = ref([])
+    const timeFlags = ref([])
     return {
       time, // 视频时长,
       boxWidth,
@@ -58,7 +59,8 @@ export default {
       space, // 每个快照切片所占长度
       layerX,
       percentage, // 进度
-      danmu
+      danmu,
+      timeFlags
     }
   },
   watch: {
@@ -88,6 +90,24 @@ export default {
         if (temp.length > 0) {
           // temp[0].setAttribute('style', 'transform: translateX(-206px);')
           // console.log(temp[0].clientWidth)
+          let i = 0
+          let widthTemp = 0
+          let topTemp = 0
+          const timeFlagsTemp = []
+          timeFlagsTemp[i] = setTimeout(function setTimeFunc () {
+            widthTemp = temp[i].clientWidth + 206
+            topTemp = (i % 2) === 0 ? 17 : 0
+            temp[i].setAttribute('style', `transform: translateX(-${widthTemp}px);top: ${topTemp}px;`)
+            if (i === (temp.length - 1)) {
+              timeFlagsTemp[i] = setTimeout(() => {
+                temp[i].setAttribute('style', `transform: translateX(-${widthTemp}px);top: ${topTemp}px;`)
+              }, 1500)
+            } else {
+              i++
+              timeFlagsTemp[i] = setTimeout(setTimeFunc, 1500)
+            }
+          }, 0)
+          this.timeFlags = timeFlagsTemp
         }
       })
     },
@@ -104,7 +124,10 @@ export default {
     closePreVideo () {
       this.flag = true
       const temp = document.querySelectorAll('.video-pre-danmu')
-      temp[0].setAttribute('style', 'transform: translateX(0px);')
+      for (let i = 0; i < temp.length; i++) {
+        temp[i].setAttribute('style', 'transform: translateX(0px);')
+        clearTimeout(this.timeFlags[i])
+      }
     }
   }
 }
@@ -171,7 +194,7 @@ export default {
           color white
           position absolute
           left 206px
-          transition 3s
+          transition 6s linear
 
   .title-wrap
     height 40px
