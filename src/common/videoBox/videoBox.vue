@@ -9,7 +9,7 @@
         <div class="video-pre-percentage">
           <el-progress :percentage="percentage" color="#66b1ff" :show-text="false"></el-progress>
         </div>
-        <div class="video-pre-danmu-warp">
+        <div class="video-pre-danmu-warp" ref="preDanmuWrap">
           <span class="video-pre-danmu" v-for="(item, index) in danmu" :key="index"
                 :style="{'top': (index % 2 ===0) ? '17px' : '0'}">
             {{ item }}
@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { secondToNormal } from '@/common/utils'
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import axios from 'axios'
 
 export default {
@@ -39,8 +39,7 @@ export default {
     }
   },
   setup (props) {
-    console.log(props.videoData.duration)
-    const time = ref('')
+    const time = ref(secondToNormal(props.videoData.duration))
     const boxWidth = ref(206)
     const flag = ref(true)
     const preImgUrl = ref('')
@@ -63,67 +62,59 @@ export default {
       timeFlags
     }
   },
-  watch: {
-    videoData: {
-      handler (newVal, oldVal) {
-        // console.log(typeof secondToNormal(newVal.duration))
-        this.time = secondToNormal(newVal.duration)
-      }
-    }
-  },
   methods: {
     // 获取预览图信息和弹幕信息
     async getPreVideo (event) {
-      await axios.get('/api/pvideo?aid=761930368').then(res => {
-        // console.log(event.layerX)
-        this.preImgUrl = 'http:' + res.data.data.image[0]
-        this.preImgNum = (res.data.data.image.length > 1) ? 100 : (res.data.data.index.length - 1)
-        // console.log(this.preImgNum)
-        this.space = this.boxWidth / this.preImgNum
-        this.changePreVideo(event)
-        this.flag = false
-      })
-      await axios.get('/api/x/v2/dm/ajax?aid=761930368').then(res => {
-        // console.log(res.data.data)
-        this.danmu = res.data.data
-        const temp = document.querySelectorAll('.video-pre-danmu')
-        if (temp.length > 0) {
-          // temp[0].setAttribute('style', 'transform: translateX(-206px);')
-          // console.log(temp[0].clientWidth)
-          let i = 0
-          let widthTemp = 0
-          let topTemp = 0
-          const timeFlagsTemp = []
-          timeFlagsTemp[i] = setTimeout(function setTimeFunc () {
-            widthTemp = temp[i].clientWidth + 206
-            topTemp = (i % 2) === 0 ? 17 : 0
-            temp[i].setAttribute('style', `transform: translateX(-${widthTemp}px);top: ${topTemp}px;`)
-            if (i === (temp.length - 1)) {
-              timeFlagsTemp[i] = setTimeout(() => {
-                temp[i].setAttribute('style', `transform: translateX(-${widthTemp}px);top: ${topTemp}px;`)
-              }, 1500)
-            } else {
-              i++
-              timeFlagsTemp[i] = setTimeout(setTimeFunc, 1500)
-            }
-          }, 0)
-          this.timeFlags = timeFlagsTemp
-        }
-      })
+      const videoUrlTemp = '/api/pvideo?aid=' + this.videoData.aid
+      const res1 = await axios.get(videoUrlTemp)
+      this.preImgUrl = 'http:' + res1.data.data.image[0]
+      this.preImgNum = (res1.data.data.image.length > 1) ? 100 : (res1.data.data.index.length - 1)
+      this.space = this.boxWidth / this.preImgNum
+      this.changePreVideo(event)
+      this.flag = false
+
+      // console.log(temp)
+      const danmuUrlTemp = '/api/x/v2/dm/ajax?aid=' + this.videoData.aid
+      const res2 = await axios.get(danmuUrlTemp)
+      this.danmu = res2.data.data
+      await this.$nextTick()
+      const temp = this.$refs.preDanmuWrap.children
+      for (let i = 0; i < temp.length; i++) {
+        temp[i].setAttribute('style', 'transform: translateX(0px);')
+        clearTimeout(this.timeFlags[i])
+      }
+      if (temp.length > 0) {
+        let i = 0
+        let widthTemp = 0
+        let topTemp = 0
+        const timeFlagsTemp = []
+        timeFlagsTemp[i] = setTimeout(function setTimeFunc () {
+          widthTemp = temp[i].clientWidth + 206
+          topTemp = (i % 2) === 0 ? 17 : 0
+          temp[i].setAttribute('style', `transform: translateX(-${widthTemp}px);top: ${topTemp}px;`)
+          if (i === (temp.length - 1)) {
+            timeFlagsTemp[i] = setTimeout(() => {
+              temp[i].setAttribute('style', `transform: translateX(-${widthTemp}px);top: ${topTemp}px;`)
+            }, 1500)
+          } else {
+            i++
+            timeFlagsTemp[i] = setTimeout(setTimeFunc, 1500)
+          }
+        }, 0)
+        this.timeFlags = timeFlagsTemp
+      }
     },
     changePreVideo (event) {
-      // console.log(event.layerX)
       const currentImgNum: number = Math.floor(event.layerX / this.space) // 当前是第几张快照切片
       this.percentage = currentImgNum > 0 ? currentImgNum < 100 ? currentImgNum : 100 : 0
-      // console.log('currentImgNum: ' + currentImgNum)
-      const currentY: number = Math.floor((currentImgNum % 10 === 0) ? currentImgNum / 10 : currentImgNum / 10 + 1) * 116
+      const currentY: number = Math.floor((currentImgNum % 10 === 0) ? currentImgNum / 10 : currentImgNum / 10) * 116
       const currentX: number = (currentImgNum % 10 === 0) ? 0 : (currentImgNum % 10 - 1) * 206
       this.$refs.videoPreWrap.style.backgroundImage = `url('${this.preImgUrl}')`
       this.$refs.videoPreWrap.style.backgroundPosition = `-${currentX}px -${currentY}px`
     },
     closePreVideo () {
       this.flag = true
-      const temp = document.querySelectorAll('.video-pre-danmu')
+      const temp = this.$refs.preDanmuWrap.children
       for (let i = 0; i < temp.length; i++) {
         temp[i].setAttribute('style', 'transform: translateX(0px);')
         clearTimeout(this.timeFlags[i])
@@ -133,7 +124,7 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus">
+<style lang="stylus" scoped>
 .video-box
   width 206px
   display flex

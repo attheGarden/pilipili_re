@@ -124,9 +124,9 @@
             </span>
           </header>
           <div class="ext-box">
-            <video-box :video-data="videoList" v-if="videoList"></video-box>
+            <VideoBox :video-data="video1" v-if="video1.aid"></VideoBox>
             <ad-box></ad-box>
-            <ad-box></ad-box>
+            <VideoBox :video-data="video2" v-if="video2.aid"></VideoBox>
             <ad-box></ad-box>
           </div>
         </div>
@@ -143,22 +143,60 @@ import mHeader from '@/components/m-header/m-header.vue'
 import mMenu from '@/components/menu/m-menu.vue'
 import promoteVideoBox from '@/common/promoteVideoBox/promoteVideoBox.vue'
 import adBox from '@/common/adBox/adBox.vue'
-import videoBox from '@/common/videoBox/videoBox.vue'
+import VideoBox from '@/common/videoBox/videoBox.vue'
 import 'src/common/sakura'
 
 export default {
   setup () {
-    const videoList = ref({})
-    axios.get('/api/x/web-interface/view?aid=761930368').then(res => {
-      // console.log(res.data)
-      videoList.value = res.data.data
-      console.log(videoList)
+    // 轮播图
+    const sliderImg = ref([])
+    sliderImg.value = [
+      {
+        img: 'https://i0.hdslb.com/bfs/archive/b756748dcb605391c55db5b8a24073e20b61359f.jpg@880w_440h.jpg'
+      },
+      {
+        img: 'https://i0.hdslb.com/bfs/archive/e02dbd6344cfcbbb4e327c5c1cf14d6c84684444.jpg@880w_440h.jpg'
+      },
+      {
+        img: 'https://i0.hdslb.com/bfs/feed-admin/6b52273be6d566d85ba14b6f659905a1ceb0dbc4.jpg@880w_388h_1c_95q'
+      },
+      {
+        img: 'https://i0.hdslb.com/bfs/feed-admin/368465008c7fed98726f1970d65f50000ba8b033.png@880w_388h_1c_95q'
+      }
+    ]
+    // 推荐视频
+    const promoteVideoList = ref([])
+    axios.get('/api/x/web-interface/archive/related?aid=12').then(res => {
+      // console.log(res.data.data)
+      promoteVideoList.value = res.data.data.slice(12, 18)
     })
+    // 视频栗子1
+    const video1 = ref({})
+    axios.get('/api/x/web-interface/view?aid=761930368').then(res => {
+      video1.value = res.data.data
+      // console.log(video1)
+    })
+    // 视频栗子2
+    const video2 = ref({})
+    axios.get('/api/x/web-interface/view?aid=674768495').then(res => {
+      video2.value = res.data.data
+      // console.log(video2)
+    })
+    const login_popover_flag = ref(false)
+    const showLoginBox = () => {
+      login_popover_flag.value = true
+    }
+    const hideLoginBox = () => {
+      login_popover_flag.value = false
+    }
     return {
-      ...getSliderImg(),
-      ...loginBoxFun(),
-      ...getPromoteVideo(),
-      videoList
+      sliderImg,
+      login_popover_flag,
+      showLoginBox,
+      hideLoginBox,
+      promoteVideoList,
+      video1,
+      video2
     }
   },
   components: {
@@ -166,7 +204,7 @@ export default {
     mMenu,
     promoteVideoBox,
     adBox,
-    videoBox
+    VideoBox
   },
   methods: {},
   mounted () {
@@ -221,52 +259,6 @@ export default {
       })
     }
   }
-}
-
-function loginBoxFun () {
-  const login_popover_flag = ref(false)
-  const showLoginBox = () => {
-    login_popover_flag.value = true
-  }
-  const hideLoginBox = () => {
-    login_popover_flag.value = false
-  }
-  return {
-    login_popover_flag,
-    showLoginBox,
-    hideLoginBox
-  }
-}
-
-function getSliderImg () {
-  const sliderImg = ref([])
-  sliderImg.value = [
-    {
-      img: 'https://i0.hdslb.com/bfs/archive/b756748dcb605391c55db5b8a24073e20b61359f.jpg@880w_440h.jpg'
-    },
-    {
-      img: 'https://i0.hdslb.com/bfs/archive/e02dbd6344cfcbbb4e327c5c1cf14d6c84684444.jpg@880w_440h.jpg'
-    },
-    {
-      img: 'https://i0.hdslb.com/bfs/feed-admin/6b52273be6d566d85ba14b6f659905a1ceb0dbc4.jpg@880w_388h_1c_95q'
-    },
-    {
-      img: 'https://i0.hdslb.com/bfs/feed-admin/368465008c7fed98726f1970d65f50000ba8b033.png@880w_388h_1c_95q'
-    }
-  ]
-  // axios.get('api/getSliderImg').then(res => {
-  //   sliderImg.value = res.data
-  // })
-  return { sliderImg }
-}
-
-function getPromoteVideo () {
-  const promoteVideoList = ref([])
-  axios.get('/api/x/web-interface/archive/related?aid=12').then(res => {
-    // console.log(res.data.data)
-    promoteVideoList.value = res.data.data.slice(12, 18)
-  })
-  return { promoteVideoList }
 }
 </script>
 
