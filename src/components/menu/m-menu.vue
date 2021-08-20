@@ -157,9 +157,8 @@ export default {
             font-size 14px
             color #000000
             text-align center
-            &:hover {
+            &:hover
               color #00a1d6
-            }
     .content-wrap
       width 62%
       height 68px

@@ -89,48 +89,61 @@
         </div>
       </div>
     </transition>
-    <div class="home-menu-wrap">
-      <m-menu></m-menu>
-    </div>
-    <div class="home-promote-wrap">
-      <div class="top-wrap">
-        <div class="slider">
-          <el-carousel :interval="4000" height="242px">
-            <el-carousel-item v-for="item in sliderImg" :key="item">
-              <img :src="item.img" alt="error" width="550" height="242">
-            </el-carousel-item>
-          </el-carousel>
-        </div>
-        <div class="video-wrap">
-          <div class="video-box" v-for="(item,index) in promoteVideoList" :key="index">
-            <promote-video-box :dataOfVideo="item" :isCover="true"></promote-video-box>
+    <div class="content">
+      <div class="home-menu-wrap">
+        <m-menu></m-menu>
+      </div>
+      <div class="home-promote-wrap">
+        <div class="top-wrap">
+          <div class="slider">
+            <el-carousel :interval="4000" height="242px">
+              <el-carousel-item v-for="item in sliderImg" :key="item">
+                <img :src="item.img" alt="error" width="550" height="242">
+              </el-carousel-item>
+            </el-carousel>
+          </div>
+          <div class="video-wrap">
+            <div class="video-box" v-for="(item,index) in promoteVideoList" :key="index">
+              <promote-video-box :dataOfVideo="item" :isCover="true"></promote-video-box>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="bottom-wrap">
-        <div class="extension-box">
-          <header class="storey-title-wrap">
+        <div class="bottom-wrap">
+          <div class="extension-box">
+            <header class="storey-title-wrap">
             <span class="storey-item-title">
               <i class="iconfont" style="color:#f39800;font-size: 35px;">&#xe64a;</i>
               推广
             </span>
-            <span class="storey-item-msg">
+              <span class="storey-item-msg">
               <i class="iconfont" style="color:#f0361b;font-size: 18px;margin-right: 4px">&#xe664;</i>
               <span class="msg">来B站小剧场，撒狗粮还能拿奖！</span>
             </span>
-            <span class="storey-item-msg">
+              <span class="storey-item-msg">
               <i class="iconfont" style="color:#f0361b;font-size: 18px;margin-right: 4px">&#xe664;</i>
               <span class="msg">网络安全感满意度调查</span>
             </span>
-          </header>
-          <div class="ext-box">
-            <VideoBox :video-data="video1" v-if="video1.aid"></VideoBox>
-            <ad-box></ad-box>
-            <VideoBox :video-data="video2" v-if="video2.aid"></VideoBox>
-            <ad-box></ad-box>
+            </header>
+            <div class="ext-box">
+              <videoBox :video-data="video1" v-if="video1.aid"></videoBox>
+              <ad-box></ad-box>
+              <videoBox :video-data="video2" v-if="video2.aid"></videoBox>
+              <ad-box></ad-box>
+            </div>
+          </div>
+          <div class="bybp-window">
+            <div class="online">
+              观看列表
+            </div>
+            <div class="img-box">
+              <img src="https://i0.hdslb.com/bfs/feed-admin/a079635feb90db08997913e61dc3edc68df43bc3.png"
+                   alt="error" class="img">
+            </div>
           </div>
         </div>
-        <div class="bybp-window"></div>
+      </div>
+      <div class="adBanner">
+        <img src="https://i0.hdslb.com/bfs/sycp/creative_img/202105/c03d0ddece5318052c8a78f49f10752e.jpg" class="adBanner-img">
       </div>
     </div>
   </div>
@@ -143,7 +156,7 @@ import mHeader from '@/components/m-header/m-header.vue'
 import mMenu from '@/components/menu/m-menu.vue'
 import promoteVideoBox from '@/common/promoteVideoBox/promoteVideoBox.vue'
 import adBox from '@/common/adBox/adBox.vue'
-import VideoBox from '@/common/videoBox/videoBox.vue'
+import videoBox from '@/common/videoBox/videoBox.vue'
 import 'src/common/sakura'
 
 export default {
@@ -204,7 +217,7 @@ export default {
     mMenu,
     promoteVideoBox,
     adBox,
-    VideoBox
+    videoBox
   },
   methods: {},
   mounted () {
@@ -494,87 +507,114 @@ export default {
       top: -20px
       left: calc(50% - 10px)
 
-  .home-menu-wrap
+  .content
     width 1198px
-    height 109px
     margin 0 auto
-
-  .home-promote-wrap
-    width 1198px
-    height 526px
-    margin 0 auto
-
-    .top-wrap
-      height 242px
+    .home-menu-wrap
       width 1198px
-      margin-bottom 40px
-      display flex
+      height 109px
+      margin 0 auto
 
-      .slider
-        width 550px
+    .home-promote-wrap
+      width 1198px
+      height 526px
+      margin 0 auto
+
+      .top-wrap
         height 242px
-        margin-right 10px
-        overflow: hidden
-
-      .video-wrap
-        width 638px
+        width 1198px
+        margin-bottom 40px
         display flex
-        right 0
-        flex-wrap wrap
-        flex-direction row
-        justify-content space-between
-        overflow hidden
 
-        .video-box
-          width 203px
-          height 116px
-          margin-bottom 10px
+        .slider
+          width 550px
+          height 242px
+          margin-right 10px
+          overflow: hidden
 
-    .bottom-wrap
-      width 1198px
-      height 244px
-      margin-bottom 40px
-      display flex
-      flex-direction row
-      justify-content space-between
-
-      .extension-box
-        width 854px
-        height 244px
-        overflow hidden
-        display flex
-        flex-direction column
-
-        .storey-title-wrap
+        .video-wrap
+          width 638px
           display flex
-          height 36px
-          margin-bottom 16px
-          line-height 36px
-
-          .storey-item-title
-            display flex
-            height 36px
-            line-height 36px
-            font-size 20px
-
-          .storey-item-msg
-            display flex
-            line-height 36px
-            font-size 12px
-            margin-left 20px
-            cursor pointer
-
-            .msg:hover
-              color #66b1ff
-
-        .ext-box
-          display flex
+          right 0
+          flex-wrap wrap
           flex-direction row
           justify-content space-between
+          overflow hidden
 
-      .bybp-window
-        width 320px
+          .video-box
+            width 203px
+            height 116px
+            margin-bottom 10px
+
+      .bottom-wrap
+        width 1198px
         height 244px
+        margin-bottom 40px
+        display flex
+        flex-direction row
+        justify-content space-between
+
+        .extension-box
+          width 854px
+          height 244px
+          overflow hidden
+          display flex
+          flex-direction column
+
+          .storey-title-wrap
+            display flex
+            height 36px
+            margin-bottom 16px
+            line-height 36px
+
+            .storey-item-title
+              display flex
+              height 36px
+              line-height 36px
+              font-size 20px
+
+            .storey-item-msg
+              display flex
+              line-height 36px
+              font-size 12px
+              margin-left 20px
+              cursor pointer
+
+              .msg:hover
+                color #66b1ff
+
+          .ext-box
+            display flex
+            flex-direction row
+            justify-content space-between
+
+        .bybp-window
+          width 320px
+          height 244px
+          overflow hidden
+          display flex
+          flex-direction column
+          .online
+            height 28px
+            margin 3px 0 19px
+            border 1px solid rgb(213, 213, 213)
+            background-color rgb(244, 244, 244)
+            text-align center
+            line-height 28px
+            color rgb(80, 80, 80)
+            font-size 12px
+            cursor pointer
+            &:hover
+              color #00a1d6
+          .img-box
+            width 320px
+            .img
+              width 320px
+
+    .adBanner
+      padding 25px 0
+      .adBanner-img
+        width 1198px
 
   @keyframes slideshow1
     0%

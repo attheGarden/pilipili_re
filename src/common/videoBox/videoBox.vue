@@ -4,7 +4,17 @@
       <div class="video-pic-wrap" v-show="flag">
         <img :src="videoData.pic" class="video-pic">
       </div>
-      <div class="video-pic-count" v-show="flag">{{ time }}</div>
+      <div class="video-pic-count" v-show="flag">
+        <span class="video-pic-count-item" v-show="ifViewAndLike">
+          <i class="iconfont" style="font-size: 14px;margin-right: 2px">&#xe72b;</i>
+          {{view}}
+        </span>
+        <span class="video-pic-count-item" v-show="ifViewAndLike">
+          <i class="iconfont" style="font-size: 16px;margin-right: 2px">&#xe61b;</i>
+          {{like}}
+        </span>
+        <span>{{ time }}</span>
+      </div>
       <div class="video-pre-wrap" v-show="!flag" ref="videoPreWrap">
         <div class="video-pre-percentage">
           <el-progress :percentage="percentage" color="#66b1ff" :show-text="false"></el-progress>
@@ -26,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { secondToNormal } from '@/common/utils'
+import { numberDeal, secondToNormal } from '@/common/utils'
 import { nextTick, ref } from 'vue'
 import axios from 'axios'
 
@@ -36,10 +46,17 @@ export default {
     videoData: {
       type: Object,
       default: null
+    },
+    // 是否显示播放数和点赞数
+    ifViewAndLike: {
+      type: Boolean,
+      default: false
     }
   },
   setup (props) {
     const time = ref(secondToNormal(props.videoData.duration))
+    const view = ref(numberDeal(props.videoData.stat.view))
+    const like = ref(numberDeal(props.videoData.stat.like))
     const boxWidth = ref(206)
     const flag = ref(true)
     const preImgUrl = ref('')
@@ -59,7 +76,9 @@ export default {
       layerX,
       percentage, // 进度
       danmu,
-      timeFlags
+      timeFlags,
+      view,
+      like
     }
   },
   methods: {
@@ -152,6 +171,10 @@ export default {
       position relative
       top -28px
       z-index 10
+      .video-pic-count-item
+        display flex
+        float left
+        margin-right 4px
       background-image linear-gradient(
         rgba(0, 0, 0, 0) 0%,
         rgba(0, 0, 0, 0.4) 30%,
